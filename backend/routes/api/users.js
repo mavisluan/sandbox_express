@@ -4,6 +4,7 @@ var router = express.Router();
 
 // Create
 router.post('/', async (req, res) => {
+    console.log('POST');
     const { firstName, lastName, email} = req.body;
     const user = new User({ firstName, lastName, email });
     console.log(user);
@@ -20,8 +21,10 @@ router.post('/', async (req, res) => {
 // READ
 // Get All
 router.get('/',  async (req, res) => {
+    console.log('GET ALL');
     try {
-        const users = await User.find({});
+        // sort it by createdAt Desc order
+        const users = await User.find({}).sort({createdAt: -1});
         res.send({users});
     } catch(e) {
         res.status(400).send(e);

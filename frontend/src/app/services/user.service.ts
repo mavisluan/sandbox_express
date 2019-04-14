@@ -14,6 +14,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
   // API call url
   apiUrl: string = '/api/users';
@@ -21,12 +22,12 @@ export class UserService {
   constructor(private http: HttpClient) { }
   // HttpClient return Observable
   // API call--get request
-  getUsers() : Observable<User[]> {
+  getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
   // API call -- post request
-  // saveUser(post: User): Observable<User> {
-  //   return this.http.post<User>(this.apiUrl, post, httpOptions);
-  // }
-
+  addUser(user: User): Observable<User> {
+    console.log('posting user', user);
+    return this.http.post<User>(this.apiUrl, user, httpOptions);
+  }
 }

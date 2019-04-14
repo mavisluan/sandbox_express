@@ -40,12 +40,12 @@ export class UsersComponent implements OnInit {
       // if the form input is valid (firstName, lastName, email)
       // add other attributes values
       console.log('value', value);
-      value.isActive = true;
-      value.registered = new Date();
-      value.hide = true;
+      // value.isActive = true;
+      // value.registered = new Date();
+      // value.hide = true;
       console.log('value2', value);
-      // unshift value
-      this.users.unshift(value);
+      // add value/ userForm object into db
+      this.userService.addUser(value as User).subscribe( user => this.users.unshift(user));
       // reset the form
       this.form.reset();
     }
@@ -53,7 +53,11 @@ export class UsersComponent implements OnInit {
 
   getAllUsers() {
     this.userService.getUsers().subscribe(users => {
-      this.users = users.users;
+      this.users = users.users.map(user => {
+        user.hide = true;
+        return user;
+      })
     })
   }
+
 }
