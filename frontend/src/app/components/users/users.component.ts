@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from "../../models/User";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-users',
@@ -15,21 +16,17 @@ export class UsersComponent implements OnInit {
     lastName:'',
     email: ''
   };
-  // user: User = {
-  //   firstName: 'Hello',
-  //   lastName:'World',
-  //   email: 'hello@abc.com'
-  // };
   // set a property 'form' for form submission
   // @ViewChild('userForm'): the param should match the variable name and onSubmit() param below in html file
   // matches the name in <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
   @ViewChild('userForm') form: any;
 
   users: User[];
-  constructor() { }
+  // inject UserService as dependency
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.users = [];
+    this.getAllUsers();
   }
 
   // when form is submitted, invoke the function
@@ -52,5 +49,11 @@ export class UsersComponent implements OnInit {
       // reset the form
       this.form.reset();
     }
+  }
+
+  getAllUsers() {
+    this.userService.getUsers().subscribe(users => {
+      this.users = users.users;
+    })
   }
 }
