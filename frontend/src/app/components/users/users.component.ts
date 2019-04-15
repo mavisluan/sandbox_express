@@ -80,7 +80,6 @@ export class UsersComponent implements OnInit {
 
   onUpdateUser({value, valid}: { value: User, valid: boolean }) {
     this.users.forEach((cur, index) => {
-      value.createdAt = new Date();
       if (value._id === cur._id) {
         this.users.splice(index, 1);
         this.users.unshift(value);
