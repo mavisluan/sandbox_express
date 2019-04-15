@@ -30,21 +30,18 @@ export class UserService {
     return this.http.post<User>(this.apiUrl, user, httpOptions);
   }
 
-  updateUser(user: User): Observable<User> {
-    const url = `${this.apiUrl}/${user._id}`;
-
-    return this.http.put<User>(url, user, httpOptions);
+  updateUser(targetUser: User): Observable<User> {
+    const url = `${this.apiUrl}/${targetUser._id}`;
+    return this.http.patch<User>(url, targetUser, httpOptions);
   }
 
   removeUser(id: string): Observable<User> {
     const url = `${this.apiUrl}/${id}`;
-
     return this.http.delete<User>(url, httpOptions);
   }
 
-  getUser(id: number): Observable<User> {
+  getUser(id: string): Observable<User> {
     const url = `${this.apiUrl}/${id}`;
-
     return this.http.get<User>(url);
   }
 }

@@ -1,4 +1,6 @@
-<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+<form #userForm="ngForm" (ngSubmit)="!isEdit ? onAddUser(userForm) : onUpdateUser(userForm)">
+  <input name="_id" type="hidden" [(ngModel)]="user._id" #userId="ngModel"
+         *ngIf="isEdit"/>
   <div class="form-group">
     <label>First Name</label>
     <input
@@ -57,7 +59,7 @@
       Email is not valid
     </div>
   </div>
-  <button [disabled]="!userForm.form.valid" class="btn btn-block mb-3">Add New User</button>
+  <button [disabled]="!userForm.form.valid" class="btn btn-block mb-3" [innerText]="!isEdit ? 'Add New User' : 'Update User'"></button>
 </form>
 <ul class="list-unstyled" *ngIf="users?.length > 0">
   <li class="card card-body mb-2" *ngFor="let user of users" [class.bg-light]="user.isActive">
@@ -80,7 +82,7 @@
     </h3>
     <ul class="list-group" *ngIf="!user.hide">
       <li class="list-group-item">Email: {{ user.email }}</li>
-      <li class="list-group-item">Joined: {{ user.registered ? user.registered : user.createdAt | date }}</li>
+      <li class="list-group-item">Joined: {{ user.createdAt | date }}</li>
     </ul>
   </li>
 </ul>
