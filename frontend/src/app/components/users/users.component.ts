@@ -11,7 +11,14 @@ export class UsersComponent implements OnInit {
   // Properties
   // create a user object with default values to bind the form (html) with the user object
   // ---> userForm === user object
-  user: User = {
+  // user: User = {
+  //   _id: '',
+  //   firstName: '',
+  //   lastName:'',
+  //   email: '',
+  // };
+
+  currentUser: User = {
     _id: '',
     firstName: '',
     lastName:'',
@@ -37,21 +44,50 @@ export class UsersComponent implements OnInit {
   // when form is submitted, invoke the function
   // form validation
   // value = the user object = { userForm input field: value }
-  onAddUser({value, valid}: { value: User, valid: boolean }) {
-    // if form input is not valid, console the error
-    if (!valid) {
-      console.log('Form is not valid');
-    } else {
-      // if the form input is valid (firstName, lastName, email)
-      // console.log('value', value);
-      // add value/ userForm object into db
-      this.userService.addUser(value as User).subscribe( user => {
-        console.log('user',user);
+  // onNewUser({value, valid}: { value: User, valid: boolean }) {
+  //   // if form input is not valid, console the error
+  //   if (!valid) {
+  //     console.log('Form is not valid');
+  //   } else {
+  //     // if the form input is valid (firstName, lastName, email)
+  //     // console.log('value', value);
+  //     // add value/ userForm object into db
+  //     this.userService.addUser(value as User).subscribe( user => {
+  //       console.log('user',user);
+  //       this.users.unshift(user);
+  //     });
+  //     // reset the form
+  //     this.form.reset();
+  //   }
+  // }
+  //
+  // onUpdatedUser({value, valid}: { value: User, valid: boolean }) {
+  //   this.users.forEach((cur, index) => {
+  //     if (value._id === cur._id) {
+  //       this.users.splice(index, 1);
+  //       this.users.unshift(value);
+  //     }
+  //   })
+  //   this.userService.updateUser(value as User).subscribe( user => {
+  //     console.log(user);
+  //   });
+  //   // reset the form
+  //   this.form.reset();
+  //   this.isEdit = false;
+  // }
+
+  onNewUser(user: User) {
+    this.users.unshift(user);
+  }
+
+  onUpdatedUser(user: User) {
+    this.users.forEach((cur, index) => {
+      if (user._id === cur._id) {
+        this.users.splice(index, 1);
         this.users.unshift(user);
-      });
-      // reset the form
-      this.form.reset();
-    }
+        this.isEdit = false;
+      }
+    });
   }
 
   getAllUsers() {
@@ -73,23 +109,7 @@ export class UsersComponent implements OnInit {
   }
 
   editUser(id: string) {
-    this.userService.getUser(id).subscribe(user => { this.user = user });
+    this.userService.getUser(id).subscribe(user => { this.currentUser = user });
     this.isEdit = true;
-  }
-
-
-  onUpdateUser({value, valid}: { value: User, valid: boolean }) {
-    this.users.forEach((cur, index) => {
-      if (value._id === cur._id) {
-        this.users.splice(index, 1);
-        this.users.unshift(value);
-      }
-    })
-    this.userService.updateUser(value as User).subscribe( user => {
-      console.log(user);
-    });
-    // reset the form
-    this.form.reset();
-    this.isEdit = false;
   }
 }
