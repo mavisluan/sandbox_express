@@ -40,10 +40,6 @@ export class UsersComponent implements OnInit {
       // if the form input is valid (firstName, lastName, email)
       // add other attributes values
       console.log('value', value);
-      // value.isActive = true;
-      // value.registered = new Date();
-      // value.hide = true;
-      console.log('value2', value);
       // add value/ userForm object into db
       this.userService.addUser(value as User).subscribe( user => this.users.unshift(user));
       // reset the form
@@ -57,7 +53,21 @@ export class UsersComponent implements OnInit {
         user.hide = true;
         return user;
       })
+      console.log('getAllUsers', users);
     })
+  }
+
+  removeUser(id: string) {
+    if (confirm('Are You Sure?')) {
+      this.userService.removeUser(id).subscribe(() => {
+        // this.users.forEach((cur, index) => {
+        //   if (user._id === cur._id) {
+        //     this.users.splice(index, 1);
+        //   }
+        // });
+        this.users = this.users.filter(user => user._id != id);
+      });
+    }
   }
 
 }

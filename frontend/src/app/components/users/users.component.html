@@ -67,6 +67,16 @@
           <i [ngClass]="user.hide ? 'fa fa-plus' : 'fa fa-minus'"></i>
         </button>
       </small>
+      <small>
+        <button (click)="removeUser(user._id)" class="btn btn-dark btn-sm ml-3">
+          <i class="far fa-trash-alt"></i>
+        </button>
+      </small>
+      <small>
+        <button (click)="editUser(user._id)" class="btn btn-dark btn-sm ml-3">
+          <i class="far fa-edit"></i>
+        </button>
+      </small>
     </h3>
     <ul class="list-group" *ngIf="!user.hide">
       <li class="list-group-item">Email: {{ user.email }}</li>
