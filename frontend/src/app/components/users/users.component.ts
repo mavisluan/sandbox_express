@@ -56,7 +56,7 @@ export class UsersComponent implements OnInit {
 
   getAllUsers() {
     this.userService.getUsers().subscribe(users => {
-      this.users = users.users.map(user => {
+      this.users = users.map(user => {
         user.hide = true;
         return user;
       });
@@ -73,7 +73,7 @@ export class UsersComponent implements OnInit {
   }
 
   editUser(id: string) {
-    this.userService.getUser(id).subscribe(user => { this.user = user.user });
+    this.userService.getUser(id).subscribe(user => { this.user = user });
     this.isEdit = true;
   }
 

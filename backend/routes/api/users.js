@@ -25,7 +25,7 @@ router.get('/',  async (req, res) => {
     try {
         // sort it by createdAt Desc order
         const users = await User.find({}).sort({createdAt: -1});
-        res.send({users});
+        res.send(users);
     } catch(e) {
         res.status(400).send(e);
     }
@@ -45,7 +45,7 @@ router.get(`/:id`, async (req, res) => {
         if(!user) {
             return res.status(404).send()
         }
-        res.send({user})
+        res.send(user)
     } catch(e) {
         res.status(400).send()
     }
@@ -64,7 +64,7 @@ router.patch('/:id', async (req, res) => {
         if(!user) {
             return res.status(404).send();
         }
-        res.send({user});
+        res.send(user);
     } catch(e) {
         res.status(400).send(e);
     }
@@ -84,7 +84,7 @@ router.delete(`/:id`, async (req, res) => {
         if (!user) {
             return res.status(404).send()
         }
-        res.status(200).send({user})
+        res.status(200).send(user)
     } catch(e) {
         res.status(400).send()
     }
