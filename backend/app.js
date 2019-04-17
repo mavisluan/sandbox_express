@@ -11,7 +11,7 @@ const flash = require('express-flash');
 // connect to db
 const { mongoose } = require('./db/mongoose');
 
-// var indexRouter = require('./routes');
+var indexRouter = require('./routes');
 var usersRouter = require('./routes/api/users');
 
 var app = express();
@@ -21,6 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../frontend/dist/frontend')));
+
+
 app.use(bodyParser.json());
 
 // load middlewares
@@ -33,7 +35,14 @@ app.use(session({
 }));
 app.use(flash());
 
-// app.use('/', indexRouter);
+app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+
+// When no path matches, render frontend index.html file
+// this route will be triggered if any of the routes above did not match
+app.all("*", (req,res,next) => {
+    console.log('CATCHING ALL')
+    res.sendFile(path.resolve(__dirname, '../frontend/dist/frontend/index.html'))
+});
 
 module.exports = app;
